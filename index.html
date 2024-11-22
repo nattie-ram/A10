@@ -9,9 +9,6 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        input, button {
-            margin-top: 10px;
-        }
         #cookieValue {
             margin-top: 20px;
             color: blue;
@@ -26,16 +23,10 @@
 </head>
 <body>
     <h1>Cookie Demo</h1>
-    <div id="inputSection">
-        <p>Enter your name below to save it as a cookie:</p>
-        <input type="text" id="usernameInput" placeholder="Enter your name">
-        <button onclick="saveName()">Save Name</button>
-    </div>
-
     <div id="cookieValue"></div>
 
     <footer>
-        <p>&copy; 2024, Assignment A10, Due: 2024-11-21, Created by Natalie Ramlall </p>
+        <p>&copy; 2024, Assignment A10, Due: 2024-11-21, Created by [Your Name]</p>
     </footer>
 
     <script>
@@ -64,34 +55,28 @@
             return "";
         }
 
-        // Save the username in a cookie
-        function saveName() {
-            const username = document.getElementById("usernameInput").value;
-            if (username !== "") {
-                setCookie("username", username, 30); // Save cookie for 30 days
-                displayCookie();
-            } else {
-                alert("Please enter a name.");
-            }
-        }
-
-        // Display the cookie value
-        function displayCookie() {
-            const username = getCookie("username");
+        // Function to check for the cookie
+        function checkCookie() {
+            let username = getCookie("username");
             const displayDiv = document.getElementById("cookieValue");
-            const inputSection = document.getElementById("inputSection");
 
-            if (username) {
+            if (username !== "") {
+                // If cookie exists, display it
                 displayDiv.innerHTML = `Hello, <strong>${username}</strong>! Your name is stored in a cookie.`;
-                inputSection.style.display = "none"; // Hide input section
             } else {
-                displayDiv.innerHTML = "No name stored in cookies yet.";
-                inputSection.style.display = "block"; // Show input section
+                // If no cookie exists, use a prompt to ask for the user's name
+                username = prompt("Please enter your name:");
+                if (username !== "" && username !== null) {
+                    setCookie("username", username, 30); // Save cookie for 30 days
+                    displayDiv.innerHTML = `Hello, <strong>${username}</strong>! Your name is stored in a cookie.`;
+                } else {
+                    displayDiv.innerHTML = "No name stored in cookies yet.";
+                }
             }
         }
 
-        // Display the cookie value when the page loads
-        window.onload = displayCookie;
+        // Check for and display the cookie when the page loads
+        window.onload = checkCookie;
     </script>
 </body>
 </html>
