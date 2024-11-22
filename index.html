@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Demo Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin-top: 10px;
+        }
+        #cookieValue {
+            margin-top: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cookie Demo</h1>
+    <p>Enter your name below to save it as a cookie:</p>
+    <input type="text" id="usernameInput" placeholder="Enter your name">
+    <button onclick="saveName()">Save Name</button>
+
+    <div id="cookieValue"></div>
+
+    <script>
+        // Function to set a cookie
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000)); // Set expiration
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // Function to get a cookie
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Save the username in a cookie
+        function saveName() {
+            const username = document.getElementById("usernameInput").value;
+            if (username !== "") {
+                setCookie("username", username, 30); // Save cookie for 30 days
+                displayCookie();
+            } else {
+                alert("Please enter a name.");
+            }
+        }
+
+        // Display the cookie value
+        function displayCookie() {
+            const username = getCookie("username");
+            const displayDiv = document.getElementById("cookieValue");
+            if (username) {
+                displayDiv.innerHTML = `Hello, <strong>${username}</strong>! Your name is stored in a cookie.`;
+            } else {
+                displayDiv.innerHTML = "No name stored in cookies yet.";
+            }
+        }
+
+        // Display the cookie value when the page loads
+        window.onload = displayCookie;
+    </script>
+</body>
+</html>
