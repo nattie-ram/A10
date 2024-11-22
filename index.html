@@ -16,15 +16,27 @@
             margin-top: 20px;
             color: blue;
         }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: gray;
+        }
     </style>
 </head>
 <body>
     <h1>Cookie Demo</h1>
-    <p>Enter your name below to save it as a cookie:</p>
-    <input type="text" id="usernameInput" placeholder="Enter your name">
-    <button onclick="saveName()">Save Name</button>
+    <div id="inputSection">
+        <p>Enter your name below to save it as a cookie:</p>
+        <input type="text" id="usernameInput" placeholder="Enter your name">
+        <button onclick="saveName()">Save Name</button>
+    </div>
 
     <div id="cookieValue"></div>
+
+    <footer>
+        <p>&copy; 2024, Assignment A10, Due: 2024-11-21, Created by Natalie Ramlall </p>
+    </footer>
 
     <script>
         // Function to set a cookie
@@ -67,10 +79,14 @@
         function displayCookie() {
             const username = getCookie("username");
             const displayDiv = document.getElementById("cookieValue");
+            const inputSection = document.getElementById("inputSection");
+
             if (username) {
                 displayDiv.innerHTML = `Hello, <strong>${username}</strong>! Your name is stored in a cookie.`;
+                inputSection.style.display = "none"; // Hide input section
             } else {
                 displayDiv.innerHTML = "No name stored in cookies yet.";
+                inputSection.style.display = "block"; // Show input section
             }
         }
 
